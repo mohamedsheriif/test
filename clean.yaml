@@ -3,7 +3,7 @@ name: clean-up2
 platform:
   os: linux
 steps:
-  - image: mcr.microsoft.com/azure-cli
+  # - image: mcr.microsoft.com/azure-cli
     cmd: |
       #!/bin/bash
 
