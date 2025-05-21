@@ -1,0 +1,48 @@
+version: v1.1.0
+name: clean-up
+platform:
+  os: linux
+steps:
+  - cmd: |
+      #!/bin/bash
+
+      number_of_digests_to_keep=5
+      ACR_NAME="skolerastage"
+
+      echo ">>> Processing ACR: $ACR_NAME"
+
+      REPOS=$(az acr repository list --name "$ACR_NAME" --output tsv)
+      for repo in $REPOS; do
+        echo "  > Repository: $repo"
+        LOGIN_SERVER=$(az acr show --name "$ACR_NAME" --query "loginServer" -o tsv)
+        FULL_REPO="$LOGIN_SERVER/$repo"
+
+        DIGESTS=$(az acr manifest list-metadata "$FULL_REPO" \
+          --orderby time_desc \
+          --query "[].digest" \
+          --output tsv)
+
+        DIGEST_ARRAY=($DIGESTS)
+        TOTAL_DIGESTS=${#DIGEST_ARRAY[@]}
+
+        if [ "$TOTAL_DIGESTS" -le $number_of_digests_to_keep ]; then
+          echo "    Skipping — only $TOTAL_DIGESTS digest(s) found."
+          continue
+        fi
+
+        KEEP_DIGESTS=("${DIGEST_ARRAY[@]:0:$number_of_digests_to_keep}")
+        DELETE_DIGESTS=("${DIGEST_ARRAY[@]:$number_of_digests_to_keep}")
+
+        echo "    Keeping latest $number_of_digests_to_keep digests. Deleting ${#DELETE_DIGESTS[@]}..."
+        for digest in "${KEEP_DIGESTS[@]}"; do
+          echo "      Keeping digest: $digest"
+        done
+
+        for digest in "${DELETE_DIGESTS[@]}"; do
+          echo "      Deleting digest: $digest"
+          # Uncomment the line below to actually delete
+          # az acr repository delete --name "$ACR_NAME" --image "$repo@$digest" --yes
+        done
+      done
+    image: mcr.microsoft.com/azure-cli
+context: .
