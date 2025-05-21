@@ -3,5 +3,5 @@ name: clean
 platform: 
   os: linux
 steps:
-  - cmd: mcr.microsoft.com/azure-cli ./acr-retention.sh
+  - cmd: mcr.microsoft.com/azure-cli chmod +x ./acr-retention.sh && ./acr-retention.sh
 
