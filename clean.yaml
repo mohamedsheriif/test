@@ -4,7 +4,7 @@ platform:
   os: linux
 steps:
   # - image: mcr.microsoft.com/azure-cli
-    cmd: |
+  - cmd: |
       #!/bin/bash
 
       number_of_digests_to_keep=5
