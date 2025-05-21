@@ -4,8 +4,7 @@ platform:
   os: linux
 steps:
   - name: clean
-    image: ubuntu:latest
-    cmd: |
+    cmd: ubuntu:latest |
       echo "Cleaning up..."
       echo "Cleanup complete."
 
