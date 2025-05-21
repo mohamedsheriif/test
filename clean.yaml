@@ -3,5 +3,5 @@ name: clean
 platform: 
   os: linux
 steps:
-  - cmd: docker.io/mohamedsherif20/test-acraz:latest
+  - cmd: docker.io/mohamedsherif20/test-acraz:v4
 
