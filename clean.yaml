@@ -3,8 +3,8 @@ name: clean-up2
 platform:
   os: linux
 steps:
-  # - image: mcr.microsoft.com/azure-cli
-  - cmd: |
+  - image: mcr.microsoft.com/azure-cli
+    cmd: |
       #!/bin/bash
 
       number_of_digests_to_keep=5
