@@ -3,7 +3,5 @@ name: clean
 platform: 
   os: linux
 steps:
-  - cmd: mcr.microsoft.com/azure-cli
-    entrypoint: /bin/sh
-    cmd: -c ./acr-retention.sh
+  - cmd: mcr.microsoft.com/azure-cli ./acr-retention.sh
 
