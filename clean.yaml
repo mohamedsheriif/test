@@ -3,8 +3,5 @@ name: clean
 platform: 
   os: linux
 steps:
-  - name: clean
-    cmd: ubuntu:latest |
-      echo "Cleaning up..."
-      echo "Cleanup complete."
+  - cmd: mcr.microsoft.com/azure-cli
 
