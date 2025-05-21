@@ -4,4 +4,5 @@ platform:
   os: linux
 steps:
   - cmd: mcr.microsoft.com/azure-cli
+    entrypoint: acr-retention.sh
 
